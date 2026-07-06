@@ -1,0 +1,6 @@
+{
+  "name": "Mongolian Typeracer",
+  "description": "Монгол хэлээрх Typeracer бичих хурдны уралдаант тоглоом. Хурдан бичиж шилдэг тоглогчдын жагсаалтад өрсөлдөөрэй.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

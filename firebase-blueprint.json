@@ -1,0 +1,81 @@
+{
+  "entities": {
+    "Score": {
+      "title": "Score",
+      "description": "User game scores in Typeracer",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The user's nickname or name"
+        },
+        "wpm": {
+          "type": "number",
+          "description": "Words per minute"
+        },
+        "accuracy": {
+          "type": "number",
+          "description": "Accuracy percentage"
+        },
+        "errors": {
+          "type": "number",
+          "description": "Total typing errors"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the score was registered"
+        }
+      },
+      "required": ["name", "wpm", "accuracy", "errors", "createdAt"]
+    },
+    "Room": {
+      "title": "Room",
+      "description": "Multiplayer duel room in Typeracer",
+      "type": "object",
+      "properties": {
+        "roomCode": {
+          "type": "string",
+          "description": "The unique lobby passcode"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["waiting", "starting", "racing", "finished"],
+          "description": "Lobby/Race state"
+        },
+        "difficulty": {
+          "type": "string",
+          "description": "Race difficulty setting"
+        },
+        "textToType": {
+          "type": "string",
+          "description": "The selected Mongolian text"
+        },
+        "textSource": {
+          "type": "string",
+          "description": "Source of the text"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the room was initialized"
+        },
+        "players": {
+          "type": "object",
+          "description": "Map of playerId to player race statistics"
+        }
+      },
+      "required": ["roomCode", "status", "difficulty", "textToType", "textSource", "createdAt", "players"]
+    }
+  },
+  "firestore": {
+    "typeracer_scores/{scoreId}": {
+      "schema": "Score",
+      "description": "Collection of all typeracer scores for leaderboard"
+    },
+    "typeracer_rooms/{roomCode}": {
+      "schema": "Room",
+      "description": "Active and completed multiplayer duel lobbies"
+    }
+  }
+}

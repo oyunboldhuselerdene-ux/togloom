@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /typeracer_scores/{scoreId} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string 
+                   && request.resource.data.name.size() > 0 
+                   && request.resource.data.name.size() <= 30
+                   && request.resource.data.wpm is number
+                   && request.resource.data.wpm >= 0
+                   && request.resource.data.accuracy is number
+                   && request.resource.data.accuracy >= 0
+                   && request.resource.data.accuracy <= 100
+                   && request.resource.data.errors is int
+                   && request.resource.data.errors >= 0;
+      allow update, delete: if false;
+    }
+
+    match /typeracer_rooms/{roomCode} {
+      allow read: if true;
+      allow create: if request.resource.data.roomCode == roomCode
+                   && request.resource.data.status == "waiting"
+                   && request.resource.data.difficulty is string
+                   && request.resource.data.textToType is string
+                   && request.resource.data.textSource is string
+                   && request.resource.data.players is map;
+      allow update: if request.resource.data.roomCode == resource.data.roomCode
+                   && request.resource.data.textToType == resource.data.textToType
+                   && request.resource.data.textSource == resource.data.textSource
+                   && (request.resource.data.status == "waiting" || request.resource.data.status == "starting" || request.resource.data.status == "racing" || request.resource.data.status == "finished")
+                   && request.resource.data.players is map;
+      allow delete: if false;
+    }
+  }
+}
