@@ -15,20 +15,20 @@ export default function StatsDisplay({
   elapsedTime,
   isComplete = false,
 }: StatsDisplayProps) {
-  // Format elapsedTime nicely, e.g. 14.5s or 1m 12s
+  // Format elapsedTime nicely, e.g. 14.5с or 1м 12с
   const formatTime = (seconds: number) => {
     if (seconds < 60) {
-      return `${seconds.toFixed(1)}s`;
+      return `${seconds.toFixed(1)}с`;
     }
     const mins = Math.floor(seconds / 60);
     const secs = (seconds % 60).toFixed(0);
-    return `${mins}m ${secs}s`;
+    return `${mins}м ${secs}с`;
   };
 
   const statCards = [
     {
       id: "wpm-stat",
-      label: "Typing Speed",
+      label: "Бичих хурд",
       value: `${Math.round(wpm)}`,
       suffix: "WPM",
       icon: <Zap className="w-5 h-5 text-amber-500" />,
@@ -36,7 +36,7 @@ export default function StatsDisplay({
     },
     {
       id: "accuracy-stat",
-      label: "Accuracy",
+      label: "Нарийвчлал",
       value: `${accuracy.toFixed(1)}`,
       suffix: "%",
       icon: <CheckCircle2 className="w-5 h-5 text-emerald-500" />,
@@ -44,15 +44,15 @@ export default function StatsDisplay({
     },
     {
       id: "errors-stat",
-      label: "Errors",
+      label: "Алдааны тоо",
       value: `${errors}`,
-      suffix: "errors",
+      suffix: "алдаа",
       icon: <Award className="w-5 h-5 text-rose-500" />,
       colorClass: "bg-rose-50 text-rose-900 border-rose-100 dark:bg-rose-950/20 dark:text-rose-300 dark:border-rose-900/50",
     },
     {
       id: "time-stat",
-      label: "Elapsed Time",
+      label: "Нийт хугацаа",
       value: formatTime(elapsedTime),
       suffix: "",
       icon: <Clock className="w-5 h-5 text-indigo-500" />,

@@ -192,13 +192,6 @@ export default function MultiplayerGame({
     });
   }, [currentProgress, wpm, accuracy, errorsCount, room?.status, localFinished]);
 
-  // Check for 5-minute time limit (300 seconds) in multiplayer
-  useEffect(() => {
-    if (elapsedTime >= 300 && !localFinished && room?.status === "racing") {
-      handleFinishRace();
-    }
-  }, [elapsedTime, localFinished, room?.status]);
-
   // Listen to typing changes and handle completion
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (room?.status !== "racing" || localFinished) return;
@@ -318,7 +311,7 @@ export default function MultiplayerGame({
     return (
       <div className="flex flex-col items-center justify-center p-12 min-h-[300px]">
         <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mb-4" />
-        <p className="text-sm font-semibold text-slate-600">Fetching room information...</p>
+        <p className="text-sm font-semibold text-slate-600">Өрөөний мэдээллийг татаж байна...</p>
       </div>
     );
   }
@@ -347,17 +340,17 @@ export default function MultiplayerGame({
           id="exit-game-btn"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back</span>
+          <span>Буцах</span>
         </button>
 
         <div className="flex items-center gap-2">
           <span className="text-xs font-semibold bg-indigo-50 px-3 py-1.5 rounded-lg text-indigo-700 border border-indigo-100">
-            Room Code: <strong className="text-indigo-950 ml-1 font-mono">{roomCode}</strong>
+            Өрөөний код: <strong className="text-indigo-950 ml-1 font-mono">{roomCode}</strong>
           </span>
           <button
             onClick={copyCodeToClipboard}
             className="p-2 border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg transition-all cursor-pointer flex items-center justify-center bg-white"
-            title="Copy room code"
+            title="Код хуулах"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
           </button>
@@ -380,16 +373,16 @@ export default function MultiplayerGame({
           </div>
 
           <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2">
-            Duel Room is Ready! 🎉
+            Дуэль өрөө бэлэн боллоо! 🎉
           </h2>
           <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
-            Send the code below to invite a friend. The race can begin once both players have joined.
+            Найздаа доорх кодыг илгээн уралдаанд уриарай. Хоёр тоглогч нэгдсэнээр уралдааныг эхлүүлэх боломжтой.
           </p>
 
           {/* Large Room Code Display */}
           <div className="bg-slate-50 border border-slate-150 rounded-2xl p-5 max-w-xs mx-auto mb-8 relative flex items-center justify-between">
             <div className="text-left">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">ROOM CODE</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">ӨРӨӨНИЙ КОД</span>
               <span className="text-3xl font-black font-mono text-indigo-950 tracking-widest">{roomCode}</span>
             </div>
             <button
@@ -397,7 +390,7 @@ export default function MultiplayerGame({
               className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
             >
               {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? "Copied" : "Copy"}</span>
+              <span>{copied ? "Хууллаа" : "Хуулах"}</span>
             </button>
           </div>
 
@@ -405,14 +398,14 @@ export default function MultiplayerGame({
           <div className="max-w-md mx-auto mb-8 border border-slate-100 rounded-2xl overflow-hidden bg-slate-50/50">
             <div className="bg-slate-100/80 px-4 py-2.5 text-xs font-extrabold text-slate-600 text-left border-b border-slate-150 flex items-center gap-2">
               <Users className="w-3.5 h-3.5 text-slate-500" />
-              CONNECTED PLAYERS ({playersInRoom.length}/2)
+              ХОЛБОГДСОН ТОГЛОГЧИД ({playersInRoom.length}/2)
             </div>
             <div className="divide-y divide-slate-100">
               {playersInRoom.map((p) => {
                 const vehicleObj = RACER_VEHICLES.find(v => v.id === p.vehicleId);
                 return (
                   <div key={p.id} className="p-4 flex items-center justify-between bg-white">
-                     <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
                       <span className="text-3xl">{vehicleObj?.emoji || "🚗"}</span>
                       <div className="text-left">
                         <div className="font-extrabold text-slate-800 text-sm flex items-center gap-1.5">
@@ -424,15 +417,15 @@ export default function MultiplayerGame({
                           )}
                           {p.id === playerId && (
                             <span className="text-[9px] bg-indigo-50 text-indigo-700 border border-indigo-100 px-1.5 py-0.5 rounded font-bold uppercase">
-                              You
+                              Та
                             </span>
                           )}
                         </div>
-                        <div className="text-xs text-slate-400 font-mono">Vehicle: {vehicleObj?.label}</div>
+                        <div className="text-xs text-slate-400 font-mono">Хүлэг: {vehicleObj?.label}</div>
                       </div>
                     </div>
                     <span className="text-xs text-emerald-500 font-bold flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Connected
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Холбогдсон
                     </span>
                   </div>
                 );
@@ -440,7 +433,7 @@ export default function MultiplayerGame({
               {playersInRoom.length < 2 && (
                 <div className="p-5 text-center bg-white text-slate-400 text-xs font-semibold animate-pulse flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin text-slate-400" />
-                  Waiting for friend to join...
+                  Найзыгаа нэгдэхийг хүлээж байна...
                 </div>
               )}
             </div>
@@ -459,12 +452,12 @@ export default function MultiplayerGame({
                 }`}
               >
                 <Play className="w-5 h-5 fill-current" />
-                Start Race 🏁
+                Уралдааныг эхлүүлэх 🏁
               </button>
             ) : (
               <div className="bg-slate-50 border border-slate-150 p-4 rounded-xl text-slate-600 text-sm font-semibold flex items-center justify-center gap-2">
                 <Loader2 className="w-4 h-4 animate-spin text-indigo-500" />
-                Waiting for the host to start the race...
+                Зохион байгуулагч уралдааныг эхлүүлэхийг хүлээж байна...
               </div>
             )}
           </div>
@@ -475,7 +468,7 @@ export default function MultiplayerGame({
       {room.status === "starting" && countdown !== null && (
         <div className="bg-white border border-slate-200 rounded-2xl p-12 shadow-sm text-center mb-6 min-h-[400px] flex flex-col items-center justify-center relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-1.5 bg-amber-500" />
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-6">TWO PLAYERS CONNECTED! RACE STARTS IN</span>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-6">ХОЁР ТОГЛОГЧ ХОЛБОГДЛОО! УРАЛДААН ЭХЛЭХЭД</span>
           
           <div className="w-32 h-32 rounded-full bg-amber-50 border-4 border-amber-500 flex items-center justify-center mb-6 shadow-md">
             <span className="text-6xl font-black text-amber-600 font-mono animate-bounce">
@@ -484,7 +477,7 @@ export default function MultiplayerGame({
           </div>
 
           <p className="text-sm text-slate-500 font-semibold">
-            Get ready! Type fast and with high accuracy to finish the race!
+            Бэлэн байгаарай! Монгол хэлээр маш хурдан бөгөөд алдаагүй шивж барианд ороорой!
           </p>
         </div>
       )}
@@ -508,9 +501,9 @@ export default function MultiplayerGame({
           {!localFinished ? (
             <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm mb-6 relative">
               <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3 text-xs">
-                <span className="font-mono text-slate-400">Source: {room.textSource}</span>
+                <span className="font-mono text-slate-400">Эх сурвалж: {room.textSource}</span>
                 <span className="font-bold text-indigo-600 uppercase tracking-wider bg-indigo-50 px-2 py-0.5 rounded">
-                  {room.difficulty === "easy" ? "Easy" : room.difficulty === "medium" ? "Medium" : "Hard"}
+                  {room.difficulty === "easy" ? "Хялбар" : room.difficulty === "medium" ? "Дундаж" : "Хэцүү"}
                 </span>
               </div>
 
@@ -525,7 +518,7 @@ export default function MultiplayerGame({
                   type="text"
                   value={inputValue}
                   onChange={handleInputChange}
-                  placeholder="Start typing here..."
+                  placeholder="Энд бичиж эхэлнэ үү..."
                   className={`w-full px-5 py-4 text-base bg-slate-50 border-2 rounded-xl focus:outline-none transition-all ${
                     hasTypingError
                       ? "border-rose-500 focus:ring-4 focus:ring-rose-100 focus:bg-rose-50/20"
@@ -539,14 +532,14 @@ export default function MultiplayerGame({
                 />
                 {hasTypingError && (
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-rose-500 animate-pulse bg-rose-50 px-2 py-1 rounded border border-rose-200">
-                    Incorrect!
+                    Алдаатай байна!
                   </span>
                 )}
               </div>
 
               <div className="mt-4 flex items-center gap-2 text-xs text-slate-400 font-medium">
                 <Keyboard className="w-4 h-4 text-slate-300" />
-                <span>Tip: Fix typos first to make forward progress.</span>
+                <span>Зөвлөмж: Алдаагаа устгаж зассаны дараа урагшаа хөдөлнө.</span>
               </div>
             </div>
           ) : (
@@ -556,38 +549,25 @@ export default function MultiplayerGame({
                 <Trophy className="w-12 h-12 animate-bounce" />
               </div>
 
-              {elapsedTime >= 300 ? (
-                <>
-                  <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    Time's Up! ⏱️
-                  </h3>
-                  <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
-                    You ran out of the 5-minute time limit! You typed {correctLength} characters correctly out of {textToType.length}.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    Congratulations! You finished the race! 🎉
-                  </h3>
-                  <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
-                    You successfully completed the {textToType.length}-character paragraph in {elapsedTime.toFixed(1)} seconds.
-                  </p>
-                </>
-              )}
+              <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
+                Баяр хүргэе! Та барианд орлоо 🎉
+              </h3>
+              <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
+                Та {textToType.length} тэмдэгттэй өгүүлбэрийг {elapsedTime.toFixed(1)} секундэд маш амжилттай бичиж дуусгалаа.
+              </p>
 
               {/* Real-time other player status */}
               <div className="max-w-md mx-auto p-5 border border-slate-200 rounded-xl bg-slate-50 flex flex-col items-center justify-center gap-2 mb-6">
                 <div className="flex items-center gap-2 text-indigo-600 animate-pulse">
                   <Loader2 className="w-4 h-4 animate-spin text-indigo-500" />
-                  <span className="text-xs font-bold">Waiting for the race to finish...</span>
+                  <span className="text-xs font-bold">Уралдаан дуусахыг хүлээж байна...</span>
                 </div>
                 <div className="text-xs text-slate-400 mt-1">
                   {playersInRoom.map(p => (
                     <div key={p.id} className="flex justify-between w-64 mt-1 font-semibold">
                       <span>{p.name}:</span>
                       <span className={p.isFinished ? "text-emerald-500 font-bold" : "text-amber-500 font-bold"}>
-                        {p.isFinished ? "Finished" : `Typing (${Math.round(p.progress)}%)`}
+                        {p.isFinished ? "Барианд орсон" : `Бичиж байна (${Math.round(p.progress)}%)`}
                       </span>
                     </div>
                   ))}
@@ -602,7 +582,7 @@ export default function MultiplayerGame({
       {room.status === "finished" && (
         <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-md text-center mb-6">
           <h2 className="text-2xl font-black text-slate-900 mb-4 flex items-center justify-center gap-2">
-            🏆 Race Results 🏆
+            🏆 Уралдааны үр дүн 🏆
           </h2>
 
           {/* Duel leaderboard pod */}
@@ -628,7 +608,7 @@ export default function MultiplayerGame({
                           {p.name}
                           {p.id === playerId && (
                             <span className="text-[9px] bg-indigo-50 text-indigo-700 border border-indigo-100 px-1.5 py-0.5 rounded font-bold uppercase">
-                              You
+                              Та
                             </span>
                           )}
                         </div>
@@ -639,7 +619,7 @@ export default function MultiplayerGame({
                       <div className="text-sm font-black text-indigo-950 font-mono">
                         {Math.round(p.progress)}%
                       </div>
-                      <div className="text-[10px] text-slate-400 font-bold">RESULT</div>
+                      <div className="text-[10px] text-slate-400 font-bold">ҮР ДҮН</div>
                     </div>
                   </div>
                 );
@@ -651,7 +631,7 @@ export default function MultiplayerGame({
             className="px-6 py-3 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-extrabold text-sm transition-all shadow-md cursor-pointer"
             id="multiplayer-back-to-menu-btn"
           >
-            Back to Home
+            Нүүр хуудас руу буцах
           </button>
         </div>
       )}

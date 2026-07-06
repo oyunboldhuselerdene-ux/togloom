@@ -34,7 +34,6 @@ export default function GameScreen({
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
-  const [isTimesUp, setIsTimesUp] = useState(false);
   const [muted, setMutedState] = useState(getMuted());
 
   // Statistics
@@ -86,12 +85,7 @@ export default function GameScreen({
       const now = Date.now();
       setStartTime(now);
       timerRef.current = setInterval(() => {
-        const diff = (Date.now() - now) / 1000;
-        if (diff >= 300) {
-          setElapsedTime(300);
-        } else {
-          setElapsedTime(diff);
-        }
+        setElapsedTime((Date.now() - now) / 1000);
       }, 100);
     }
 
@@ -147,13 +141,6 @@ export default function GameScreen({
     }
   }, [inputValue, elapsedTime, totalKeystrokes, errorsCount, startTime, isFinished, correctLength]);
 
-  // Check for 5-minute time limit (300 seconds)
-  useEffect(() => {
-    if (elapsedTime >= 300 && !isFinished) {
-      handleTimesUp();
-    }
-  }, [elapsedTime, isFinished]);
-
   const handleGameFinish = async () => {
     setIsFinished(true);
     if (timerRef.current) clearInterval(timerRef.current);
@@ -168,23 +155,6 @@ export default function GameScreen({
     setAccuracy(finalAcc);
 
     // Auto save score to Firestore
-    await saveScoreToFirestore(finalWpm, finalAcc, errorsCount);
-  };
-
-  const handleTimesUp = async () => {
-    setIsFinished(true);
-    setIsTimesUp(true);
-    if (timerRef.current) clearInterval(timerRef.current);
-    playErrorSound();
-
-    // Final stat calculations
-    const finalWpm = (correctLength / 5) / (300 / 60);
-    const finalAcc = totalKeystrokes > 0 ? Math.max(0, ((totalKeystrokes - errorsCount) / totalKeystrokes) * 100) : 100;
-
-    setWpm(finalWpm);
-    setAccuracy(finalAcc);
-
-    // Auto save score to Firestore using current progress
     await saveScoreToFirestore(finalWpm, finalAcc, errorsCount);
   };
 
@@ -205,7 +175,7 @@ export default function GameScreen({
       setScoreSaved(true);
     } catch (err: any) {
       console.error("Error saving score:", err);
-      setSaveError("Error saving score to database. Your result is shown locally.");
+      setSaveError("Оноог хадгалахад алдаа гарлаа. Гэхдээ таны амжилт орон нутагт хадгалагдсан.");
     } finally {
       setSavingScore(false);
     }
@@ -221,7 +191,6 @@ export default function GameScreen({
     setStartTime(null);
     setElapsedTime(0);
     setIsFinished(false);
-    setIsTimesUp(false);
     setTotalKeystrokes(0);
     setErrorsCount(0);
     setWpm(0);
@@ -293,12 +262,12 @@ export default function GameScreen({
           id="exit-game-btn"
         >
           <ArrowLeft className="w-4 h-4" />
-          Exit
+          Гарах
         </button>
 
         <div className="flex items-center gap-2">
           <span className="text-xs font-semibold bg-slate-100 px-3 py-1.5 rounded-lg text-slate-700">
-            Player: <strong className="text-slate-950">{playerName}</strong>
+            Тоглогч: <strong className="text-slate-950">{playerName}</strong>
           </span>
           <button
             onClick={handleToggleMute}
@@ -327,9 +296,9 @@ export default function GameScreen({
         <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm mb-6 relative">
           {/* Difficulty and Source Badge */}
           <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3 text-xs">
-            <span className="font-mono text-slate-400">Source: {gameText.source}</span>
+            <span className="font-mono text-slate-400">Эх сурвалж: {gameText.source}</span>
             <span className="font-bold text-indigo-600 uppercase tracking-wider bg-indigo-50 px-2 py-0.5 rounded">
-              {difficulty === "easy" ? "Easy" : difficulty === "medium" ? "Medium" : "Hard"}
+              {difficulty === "easy" ? "Хялбар" : difficulty === "medium" ? "Дундаж" : "Хэцүү"}
             </span>
           </div>
 
@@ -345,7 +314,7 @@ export default function GameScreen({
               type="text"
               value={inputValue}
               onChange={handleInputChange}
-              placeholder={startTime ? "Keep typing..." : "Start typing here (5-minute limit)..."}
+              placeholder={startTime ? "Үргэлжлүүлэн бичнэ үү..." : "Энд бичиж эхэлснээр цаг эхэлнэ..."}
               className={`w-full px-5 py-4 text-base bg-slate-50 border-2 rounded-xl focus:outline-none transition-all ${
                 hasTypingError
                   ? "border-rose-500 focus:ring-4 focus:ring-rose-100 focus:bg-rose-50/20"
@@ -360,7 +329,7 @@ export default function GameScreen({
             />
             {hasTypingError && (
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-rose-500 animate-pulse bg-rose-50 px-2 py-1 rounded border border-rose-200">
-                Incorrect!
+                Алдаатай байна!
               </span>
             )}
           </div>
@@ -368,7 +337,7 @@ export default function GameScreen({
           {/* Typing help overlay tips */}
           <div className="mt-4 flex items-center gap-2 text-xs text-slate-400 font-medium">
             <Keyboard className="w-4 h-4 text-slate-300" />
-            <span>Tip: Fix typos first to make forward progress.</span>
+            <span>Зөвлөмж: Алдаагаа устгаж зассаны дараа урагшаа хөдөлнө.</span>
           </div>
         </div>
       ) : (
@@ -378,37 +347,24 @@ export default function GameScreen({
             <Trophy className="w-12 h-12 animate-bounce" />
           </div>
 
-          {isTimesUp ? (
-            <>
-              <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
-                Time's Up! ⏱️
-              </h3>
-              <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
-                You ran out of the 5-minute time limit. You typed {correctLength} characters correctly out of {textToType.length}.
-              </p>
-            </>
-          ) : (
-            <>
-              <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
-                Congratulations! You finished the race! 🎉
-              </h3>
-              <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
-                You successfully completed the {textToType.length}-character paragraph in {elapsedTime.toFixed(1)} seconds.
-              </p>
-            </>
-          )}
+          <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">
+            Баяр хүргэе! Та барианд орлоо 🎉
+          </h3>
+          <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
+            Та {textToType.length} тэмдэгттэй өгүүлбэрийг {elapsedTime.toFixed(1)} секундэд маш амжилттай бичиж дуусгалаа.
+          </p>
 
           {/* Saving Status Alert */}
           <div className="max-w-md mx-auto p-4 border rounded-xl mb-8 flex items-center justify-center gap-3 bg-slate-50 border-slate-200">
             {savingScore ? (
               <div className="flex items-center gap-2 text-slate-600">
                 <RotateCw className="w-4 h-4 animate-spin text-slate-500" />
-                <span className="text-xs font-bold">Saving score to Firestore...</span>
+                <span className="text-xs font-bold">Оноог Firestore руу хадгалж байна...</span>
               </div>
             ) : scoreSaved ? (
               <div className="flex items-center gap-2 text-emerald-600">
                 <CheckCircle className="w-5 h-5" />
-                <span className="text-xs font-bold">Your score has been saved to the Leaderboard!</span>
+                <span className="text-xs font-bold">Таны оноо шилдэг Leaderboard-д хадгалагдлаа!</span>
               </div>
             ) : saveError ? (
               <div className="flex flex-col gap-1.5 items-center">
@@ -420,7 +376,7 @@ export default function GameScreen({
                   onClick={() => saveScoreToFirestore(wpm, accuracy, errorsCount)}
                   className="px-3 py-1 bg-slate-900 text-white rounded text-[10px] font-bold hover:bg-slate-800 transition-colors"
                 >
-                  Retry Saving
+                  Дахин хадгалах
                 </button>
               </div>
             ) : null}
@@ -434,7 +390,7 @@ export default function GameScreen({
               id="game-restart-btn"
             >
               <RotateCw className="w-4 h-4" />
-              Play Again
+              Дахин тоглох
             </button>
 
             <button
@@ -442,7 +398,7 @@ export default function GameScreen({
               className="w-full sm:w-auto px-6 py-3 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-extrabold text-sm transition-all shadow-md cursor-pointer"
               id="game-leaderboard-btn"
             >
-              View Leaderboard
+              Leaderboard харах
             </button>
           </div>
         </div>

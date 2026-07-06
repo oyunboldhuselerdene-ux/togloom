@@ -4,98 +4,98 @@ export const GAME_TEXTS: GameText[] = [
   // Easy
   {
     id: "e1",
-    text: "Actions speak louder than words, as the old saying goes.",
+    text: "Ажил хийвэл ам тосодно гэж монгол ардын зүйр цэцэн үг байдаг.",
     difficulty: "easy",
-    source: "Proverb"
+    source: "Монгол ардын зүйр үг"
   },
   {
     id: "e2",
-    text: "Education is the window to the world and the greatest wealth in life.",
+    text: "Эрдэм ном бол ертөнцийг харах цонх бөгөөд хүний амьдралын хамгийн том баялаг мөн.",
     difficulty: "easy",
-    source: "Inspirational Quote"
+    source: "Сургаал үг"
   },
   {
     id: "e3",
-    text: "Helping others brings joy and makes the world a better place.",
+    text: "Сайн санааны үзүүрт шар тос гэдэг шиг үргэлж бусдад тусалж явах нь сайхан.",
     difficulty: "easy",
-    source: "Wisdom"
+    source: "Ард түмний сургаал"
   },
   {
     id: "e4",
-    text: "A healthy mind resides in a healthy body, so daily exercise is vital.",
+    text: "Эрүүл биед саруул ухаан оршино гэдэг тул өдөр бүр дасгал хөдөлгөөн хийж байх хэрэгтэй.",
     difficulty: "easy",
-    source: "Health Advice"
+    source: "Нийтийн эрүүл мэнд"
   },
   // Medium
   {
     id: "m1",
-    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    text: "Монгол улс бол уудам уушиг шиг дэлхийн цээжинд орших цэлгэр тал, уул нуруу хосолсон сайхан эх орон билээ.",
     difficulty: "medium",
-    source: "Winston Churchill"
+    source: "Эх орны магтуу"
   },
   {
     id: "m2",
-    text: "Everyone is the master of their own destiny, which is achieved through diligence and persistence.",
+    text: "Хүн бүхэн өөрийнхөө ирээдүйн эзэн нь бөгөөд зөвхөн хичээл зүтгэл, тууштай байдлаар амжилтанд хүрдэг.",
     difficulty: "medium",
-    source: "Personal Development"
+    source: "Хувь хүний хөгжил"
   },
   {
     id: "m3",
-    text: "Writing and speaking English correctly and beautifully is a great way to communicate with the world.",
+    text: "Аялгуут сайхан монгол хэлээрээ зөв бичиж, цэвэр сайхан ярих нь эх орноо хайрлаж буй хамгийн том илрэл юм.",
     difficulty: "medium",
-    source: "Language Study"
+    source: "Эх хэлний тухай"
   },
   {
     id: "m4",
-    text: "The shortest path to your goal is to start doing your work today without postponing it until tomorrow.",
+    text: "Зорилгодоо хүрэх хамгийн дөт зам бол өнөөдрийн ажлаа маргааш гэж хойшлуулахгүйгээр шууд хийж эхлэх явдал юм.",
     difficulty: "medium",
-    source: "Advice"
+    source: "Сургамж үг"
   },
   // Hard
   {
     id: "h1",
-    text: "The quick brown fox jumps over the lazy dog is an English pangram, containing every letter of the alphabet, which makes it perfect for typing practice.",
+    text: "Монголын нууц товчоон бол манай түүх, уран зохиолын хамгийн хосгүй үнэт дурсгал бөгөөд үеийн үед уншиж судлах учиртай түүхэн сурвалж бичиг мөн.",
     difficulty: "hard",
-    source: "Typing Practice"
+    source: "Түүхийн сурвалж"
   },
   {
     id: "h2",
-    text: "With technology developing at an incredibly rapid pace, young professionals are constantly proving their competitiveness on the global stage.",
+    text: "Технологийн хөгжил асар хурдтай явагдаж буй өнөө үед монгол залуус дэлхийн тавцанд өрсөлдөх чадвараа батлан харуулсаар байгаа нь бахархалтай.",
     difficulty: "hard",
-    source: "Technology News"
+    source: "Мэдээ мэдээлэл"
   },
   {
     id: "h3",
-    text: "Life is like a long flowing river, and it is important to greet every obstacle with a smile and turn it into a valuable lesson.",
+    text: "Амьдрал бол урсан өнгөрөх урт гол шиг бөгөөд түүний замд тааралдах бэрхшээл бүрийг инээмсэглэлээр угтаж, сургамж болгон үлдэх нь чухал юм шүү.",
     difficulty: "hard",
-    source: "Life Philosophy"
+    source: "Амьдралын ухаан"
   },
   {
     id: "h4",
-    text: "Protecting mother nature is not just the responsibility of governments, but a sacred duty that depends directly on the conscious actions of every citizen.",
+    text: "Байгаль эхээ хайрлан хамгаалах нь зөвхөн төр засгийн ажил биш, харин иргэн бүрийн ухамсарт үйл ажиллагаанаас шууд хамаарах ариун үүрэг мөн бөгөөд үүнийг хүүхэд ахуй наснаас нь суулгах хэрэгтэй.",
     difficulty: "hard",
-    source: "Environmental Education"
+    source: "Экологийн боловсрол"
   }
 ];
 
 export const RACER_VEHICLES: RacerVehicle[] = [
   {
     id: "car",
-    label: "Racing Car",
+    label: "Уралдааны машин",
     emoji: "🚗",
     color: "text-rose-500",
     bgColor: "bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-950/20 dark:border-rose-900/50"
   },
   {
     id: "rocket",
-    label: "Space Rocket",
+    label: "Сансрын пуужин",
     emoji: "🚀",
     color: "text-indigo-500",
     bgColor: "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/20 dark:border-indigo-900/50"
   },
   {
     id: "horse",
-    label: "Fast Horse",
+    label: "Хурдан морь",
     emoji: "🐎",
     color: "text-amber-600",
     bgColor: "bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-950/20 dark:border-amber-900/50"

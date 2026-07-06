@@ -57,11 +57,11 @@ export default function RacerSetup({
     e.preventDefault();
     const trimmedName = name.trim();
     if (!trimmedName) {
-      setNameError("Please enter your name!");
+      setNameError("Нэрээ оруулна уу!");
       return;
     }
     if (trimmedName.length > 30) {
-      setNameError("Name must be at most 30 characters.");
+      setNameError("Нэр хамгийн ихдээ 30 тэмдэгт байх ёстой.");
       return;
     }
     setNameError("");
@@ -71,11 +71,11 @@ export default function RacerSetup({
   const handleCreateRoom = async () => {
     const trimmedName = name.trim();
     if (!trimmedName) {
-      setNameError("Please enter your name!");
+      setNameError("Нэрээ оруулна уу!");
       return;
     }
     if (trimmedName.length > 30) {
-      setNameError("Name must be at most 30 characters.");
+      setNameError("Нэр хамгийн ихдээ 30 тэмдэгт байх ёстой.");
       return;
     }
     setNameError("");
@@ -128,7 +128,7 @@ export default function RacerSetup({
       onStartMultiplayer(roomCode, true, trimmedName, selectedVehicle);
     } catch (e: any) {
       console.error("Room creation error:", e);
-      setRoomError("Error creating room. Please try again.");
+      setRoomError("Өрөө үүсгэхэд алдаа гарлаа. Дахин оролдоно уу.");
     } finally {
       setLoading(false);
     }
@@ -137,18 +137,18 @@ export default function RacerSetup({
   const handleJoinRoom = async () => {
     const trimmedName = name.trim();
     if (!trimmedName) {
-      setNameError("Please enter your name!");
+      setNameError("Нэрээ оруулна уу!");
       return;
     }
     if (trimmedName.length > 30) {
-      setNameError("Name must be at most 30 characters.");
+      setNameError("Нэр хамгийн ихдээ 30 тэмдэгт байх ёстой.");
       return;
     }
     setNameError("");
 
     const code = roomCodeInput.trim().toUpperCase();
     if (!code) {
-      setRoomError("Please enter the room code!");
+      setRoomError("Өрөөний кодоо оруулна уу!");
       return;
     }
 
@@ -160,20 +160,20 @@ export default function RacerSetup({
       const snapshot = await getDoc(roomRef);
 
       if (!snapshot.exists()) {
-        setRoomError("Sorry, room not found. Please check your code.");
+        setRoomError("Уучлаарай, өрөө олдсонгүй. Кодоо зөв эсэхийг шалгана уу.");
         return;
       }
 
       const roomData = snapshot.data();
       if (roomData.status !== "waiting") {
-        setRoomError("Sorry, this race has already started.");
+        setRoomError("Уучлаарай, энэ уралдаан аль хэдийн эхэлсэн байна.");
         return;
       }
 
       const players = roomData.players || {};
       const numPlayers = Object.keys(players).length;
       if (numPlayers >= 2) {
-        setRoomError("The room is full (maximum 2 players).");
+        setRoomError("Өрөө дүүрсэн байна (дээд тал нь 2 тоглогч).");
         return;
       }
 
@@ -209,16 +209,16 @@ export default function RacerSetup({
       onStartMultiplayer(code, false, trimmedName, selectedVehicle);
     } catch (e: any) {
       console.error("Room join error:", e);
-      setRoomError("Error joining the room. Please try again.");
+      setRoomError("Өрөөнд холбогдоход алдаа гарлаа. Дахин оролдоно уу.");
     } finally {
       setLoading(false);
     }
   };
 
   const difficulties: { value: Difficulty; label: string; desc: string; color: string }[] = [
-    { value: "easy", label: "Easy", desc: "Short sentences", color: "border-emerald-200 text-emerald-700 bg-emerald-50/50 dark:border-emerald-900/50 dark:bg-emerald-950/10 dark:text-emerald-400" },
-    { value: "medium", label: "Medium", desc: "Medium sentences", color: "border-amber-200 text-amber-700 bg-amber-50/50 dark:border-amber-900/50 dark:bg-amber-950/10 dark:text-amber-400" },
-    { value: "hard", label: "Hard", desc: "Long sentences", color: "border-rose-200 text-rose-700 bg-rose-50/50 dark:border-rose-900/50 dark:bg-rose-950/10 dark:text-rose-400" },
+    { value: "easy", label: "Хялбар", desc: "Богино өгүүлбэр", color: "border-emerald-200 text-emerald-700 bg-emerald-50/50 dark:border-emerald-900/50 dark:bg-emerald-950/10 dark:text-emerald-400" },
+    { value: "medium", label: "Дундаж", desc: "Дундаж өгүүлбэр", color: "border-amber-200 text-amber-700 bg-amber-50/50 dark:border-amber-900/50 dark:bg-amber-950/10 dark:text-amber-400" },
+    { value: "hard", label: "Хэцүү", desc: "Урт өгүүлбэр", color: "border-rose-200 text-rose-700 bg-rose-50/50 dark:border-rose-900/50 dark:bg-rose-950/10 dark:text-rose-400" },
   ];
 
   return (
@@ -234,13 +234,14 @@ export default function RacerSetup({
           <Keyboard className="w-9 h-9" />
         </motion.div>
         <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight dark:text-white">
-          TypeRacer English
+          Монгол Typeracer
         </h1>
         <p className="text-sm text-slate-500 mt-2">
-          Type fast in English and race with others! 🏎️💨
+          Монгол хэлээр хурдан бичиж, бусадтайгаа уралдаарай! 🏎️💨
         </p>
       </div>
 
+      {/* Mode Switcher Tab Bar */}
       <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-6 max-w-sm mx-auto border border-slate-200 dark:bg-neutral-900 dark:border-neutral-850">
         <button
           type="button"
@@ -254,7 +255,7 @@ export default function RacerSetup({
               : "text-slate-500 hover:text-slate-800 dark:text-neutral-400"
           }`}
         >
-          Solo Race
+          Ганцаарчилсан (Solo)
         </button>
         <button
           type="button"
@@ -268,7 +269,7 @@ export default function RacerSetup({
               : "text-slate-500 hover:text-slate-800 dark:text-neutral-400"
           }`}
         >
-          Multiplayer Duel
+          Олон тоглогч (Duel)
         </button>
       </div>
 
@@ -277,12 +278,12 @@ export default function RacerSetup({
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm dark:bg-neutral-950 dark:border-neutral-900">
           <label className="block text-sm font-bold text-slate-800 mb-2 dark:text-neutral-200 flex items-center gap-2">
             <User className="w-4 h-4 text-slate-500" />
-            Player Name
+            Тоглогчийн нэр
           </label>
           <div className="relative">
             <input
               type="text"
-              placeholder="Enter your name here..."
+              placeholder="Нэрээ энд бичнэ үү..."
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -307,7 +308,7 @@ export default function RacerSetup({
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm dark:bg-neutral-950 dark:border-neutral-900">
           <label className="block text-sm font-bold text-slate-800 mb-3 dark:text-neutral-200 flex items-center gap-2">
             <Flame className="w-4 h-4 text-slate-500" />
-            Racing Vehicle (Avatar)
+            Уралдааны Хөлөг (Бие төлөөлөх)
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {RACER_VEHICLES.map((v) => {
@@ -346,7 +347,7 @@ export default function RacerSetup({
         {loading && (
           <div className="p-4 bg-indigo-50 border border-indigo-150 text-indigo-800 rounded-xl text-xs font-bold flex items-center justify-center gap-2 animate-pulse">
             <Loader2 className="w-4 h-4 text-indigo-500 animate-spin" />
-            <span>Please wait, processing action...</span>
+            <span>Түр хүлээнэ үү, үйлдэл хийгдэж байна...</span>
           </div>
         )}
 
@@ -356,7 +357,7 @@ export default function RacerSetup({
             {/* Difficulty Selection */}
             <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm dark:bg-neutral-950 dark:border-neutral-900">
               <label className="block text-sm font-bold text-slate-800 mb-3 dark:text-neutral-200">
-                Difficulty Level
+                Хүндрэлийн түвшин
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {difficulties.map((diff) => {
@@ -391,18 +392,18 @@ export default function RacerSetup({
                 className="w-full sm:w-1/3 py-3.5 border border-slate-200 hover:bg-slate-50 text-slate-800 rounded-xl font-bold text-sm transition-all text-center cursor-pointer dark:border-neutral-800 dark:hover:bg-neutral-900 dark:text-neutral-250"
                 id="view-leaderboard-setup-btn"
               >
-                View Leaderboard
+                Leaderboard харах
               </button>
 
               <button
                 type="button"
                 onClick={handleToggleMute}
                 className="w-full sm:w-auto p-3.5 border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-xl font-medium text-sm transition-all cursor-pointer flex items-center justify-center gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900 dark:text-neutral-300"
-                title={muted ? "Unmute" : "Mute"}
+                title={muted ? "Дуу нээх" : "Дуу хаах"}
                 id="mute-toggle-btn"
               >
                 {muted ? <VolumeX className="w-5 h-5 text-rose-500" /> : <Volume2 className="w-5 h-5 text-emerald-500" />}
-                <span className="sm:hidden">{muted ? "Muted" : "Unmuted"}</span>
+                <span className="sm:hidden">{muted ? "Дуу хаалттай" : "Дуутай"}</span>
               </button>
 
               <button
@@ -411,7 +412,7 @@ export default function RacerSetup({
                 className="w-full sm:flex-1 py-3.5 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-extrabold text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 text-center cursor-pointer disabled:opacity-50"
                 id="start-race-submit"
               >
-                Start Race 🏁
+                Уралдааныг эхлүүлэх 🏁
               </button>
             </div>
           </form>
@@ -424,15 +425,15 @@ export default function RacerSetup({
               <div>
                 <h3 className="text-base font-extrabold text-slate-800 dark:text-neutral-200 flex items-center gap-2 mb-1.5">
                   <PlusCircle className="w-5 h-5 text-indigo-600" />
-                  Create New Room
+                  Шинэ өрөө үүсгэх
                 </h3>
                 <p className="text-xs text-slate-500 mb-4">
-                  Select a difficulty level to create a room, then invite a friend with a duel code.
+                  Уралдааны түвшинг сонгон өрөө үүсгэж, найзыгаа дуэль кодоор уриарай.
                 </p>
 
                 {/* Local Difficulty select */}
                 <div className="space-y-1.5 mb-6">
-                  <span className="text-[10px] font-bold text-slate-400 block uppercase">Difficulty Level</span>
+                  <span className="text-[10px] font-bold text-slate-400 block uppercase">Хүндрэлийн түвшин</span>
                   <div className="grid grid-cols-3 gap-1.5">
                     {difficulties.map((diff) => (
                       <button
@@ -459,7 +460,7 @@ export default function RacerSetup({
                 className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-extrabold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <PlusCircle className="w-4 h-4" />
-                Create Room 🔑
+                Өрөө үүсгэх 🔑
               </button>
             </div>
 
@@ -469,10 +470,10 @@ export default function RacerSetup({
               <div>
                 <h3 className="text-base font-extrabold text-slate-800 dark:text-neutral-200 flex items-center gap-2 mb-1.5">
                   <Key className="w-5 h-5 text-emerald-500" />
-                  Join Room
+                  Өрөөнд холбогдох
                 </h3>
                 <p className="text-xs text-slate-500 mb-4">
-                  Enter the 6-digit room code provided by the host to join the race.
+                  Зохион байгуулагчаас өгсөн 6 оронтой нууц кодыг энд оруулан нэгдэнэ үү.
                 </p>
 
                 {/* Room Code Entry Input */}
@@ -480,7 +481,7 @@ export default function RacerSetup({
                   <input
                     type="text"
                     maxLength={6}
-                    placeholder="Example: A9X2D4"
+                    placeholder="Жишээ нь: A9X2D4"
                     value={roomCodeInput}
                     onChange={(e) => setRoomCodeInput(e.target.value.toUpperCase())}
                     className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 focus:border-emerald-500 rounded-xl text-center text-lg font-black font-mono tracking-widest uppercase focus:outline-none focus:ring-2 focus:ring-emerald-100 transition-all dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-100"
@@ -495,7 +496,7 @@ export default function RacerSetup({
                 className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-extrabold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <Lock className="w-4 h-4" />
-                Join with Code 🚀
+                Кодоор холбогдох 🚀
               </button>
             </div>
           </div>

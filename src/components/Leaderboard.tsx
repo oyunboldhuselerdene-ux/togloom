@@ -31,7 +31,7 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
         const data = doc.data();
         loadedScores.push({
           id: doc.id,
-          name: data.name || "Anonymous",
+          name: data.name || "Нэргүй",
           wpm: typeof data.wpm === "number" ? Math.round(data.wpm * 10) / 10 : 0,
           accuracy: typeof data.accuracy === "number" ? Math.round(data.accuracy * 10) / 10 : 0,
           errors: typeof data.errors === "number" ? data.errors : 0,
@@ -41,7 +41,7 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
       setScores(loadedScores);
     } catch (err: any) {
       console.error("Error fetching leaderboard:", err);
-      setError("An error occurred while loading results. Please check your Firestore.");
+      setError("Үр дүнг ачаалахад алдаа гарлаа. Firestore-оо шалгана уу.");
     } finally {
       setLoading(false);
     }
@@ -58,13 +58,13 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
   const formatDate = (isoString: string) => {
     try {
       const date = new Date(isoString);
-      return date.toLocaleDateString("en-US", {
+      return date.toLocaleDateString("mn-MN", {
         year: "numeric",
         month: "short",
         day: "numeric",
       });
     } catch {
-      return "Earlier";
+      return "Урьд нь";
     }
   };
 
@@ -77,10 +77,10 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
         <div>
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2 dark:text-white">
             <Trophy className="w-8 h-8 text-amber-500" />
-            TOP 10 Leaderboard
+            ТОП 10 Leaderboard
           </h2>
           <p className="text-sm text-slate-500 mt-1">
-            The fastest typing speed records
+            Хамгийн хурдан бичдэг шилдэг тоглогчид
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -88,18 +88,18 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
             onClick={fetchScores}
             disabled={loading}
             className="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors cursor-pointer flex items-center justify-center gap-1.5 dark:border-neutral-800 dark:hover:bg-neutral-900 dark:text-neutral-300"
-            title="Refresh"
+            title="Сэргээх"
             id="refresh-btn"
           >
             <RotateCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-            <span className="text-xs font-medium">Refresh</span>
+            <span className="text-xs font-medium">Шинэчлэх</span>
           </button>
           <button
             onClick={onBackToMenu}
             className="px-5 py-2.5 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl font-bold text-sm transition-all shadow-md cursor-pointer"
             id="back-menu-btn"
           >
-            Home
+            Нүүр хуудас
           </button>
         </div>
       </div>
@@ -200,7 +200,7 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
         </div>
         <input
           type="text"
-          placeholder="Search by name..."
+          placeholder="Нэрээр хайх..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all shadow-sm"
@@ -213,7 +213,7 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
         {loading ? (
           <div className="py-20 text-center">
             <RotateCw className="w-8 h-8 text-slate-400 animate-spin mx-auto mb-3" />
-            <p className="text-sm text-slate-500">Loading top players...</p>
+            <p className="text-sm text-slate-500">Шилдэг тоглогчдыг ачаалж байна...</p>
           </div>
         ) : error ? (
           <div className="py-12 px-6 text-center text-rose-500">
@@ -222,26 +222,26 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
               onClick={fetchScores}
               className="mt-4 px-4 py-2 bg-rose-50 text-rose-600 rounded-xl font-medium text-xs hover:bg-rose-100 transition-colors cursor-pointer dark:bg-rose-950/20 dark:text-rose-400"
             >
-              Try Again
+              Дахин оролдох
             </button>
           </div>
         ) : filteredScores.length === 0 ? (
           <div className="py-20 text-center text-slate-500">
             <Award className="w-12 h-12 mx-auto text-slate-300 mb-3" />
-            <p className="font-medium text-sm">No scores recorded yet.</p>
-            <p className="text-xs text-slate-400 mt-1">Be the first to play and write your name in history!</p>
+            <p className="font-medium text-sm">Одоогоор ямар нэгэн оноо бүртгэгдээгүй байна.</p>
+            <p className="text-xs text-slate-400 mt-1">Та хамгийн түрүүнд тоглож, түүхэнд бичигдээрэй!</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50/50 border-b border-slate-200 dark:bg-neutral-900/50 dark:border-neutral-850">
-                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider w-16 text-center">Rank</th>
-                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider">Player</th>
-                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Speed (WPM)</th>
-                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Accuracy</th>
-                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Errors</th>
-                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-center w-36">Date</th>
+                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider w-16 text-center">Байр</th>
+                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider">Тоглогч</th>
+                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Хурд (WPM)</th>
+                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Нарийвчлал</th>
+                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Алдаа</th>
+                  <th className="py-3.5 px-5 text-xs font-bold text-slate-500 uppercase tracking-wider text-center w-36">Огноо</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-neutral-900">
@@ -276,7 +276,7 @@ export default function Leaderboard({ onBackToMenu, currentScoreId }: Leaderboar
                           </span>
                           {isCurrent && (
                             <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-1.5 py-0.5 rounded-full dark:bg-amber-950 dark:text-amber-300">
-                              New!
+                              Шинэ!
                             </span>
                           )}
                         </div>
