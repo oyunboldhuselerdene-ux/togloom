@@ -11,7 +11,7 @@ type ActiveView = "setup" | "game" | "leaderboard" | "multiplayer";
 
 export default function App() {
   const [view, setView] = useState<ActiveView>("setup");
-  const [playerName, setPlayerName] = useState("Уралдагч");
+  const [playerName, setPlayerName] = useState("Racer");
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const [vehicle, setVehicle] = useState<RacerVehicle>(RACER_VEHICLES[0]);
   const [latestScoreId, setLatestScoreId] = useState<string | undefined>(undefined);
@@ -100,7 +100,7 @@ export default function App() {
             TR
           </div>
           <span className="font-extrabold tracking-tight text-white text-base">
-            Typeracer Mongolian
+            TypeRacer
           </span>
         </div>
 
@@ -169,7 +169,7 @@ export default function App() {
             <span className="font-semibold">Firebase Firestore Sync Active</span>
           </div>
           <div className="text-slate-400">
-            &copy; {new Date().getFullYear()} Typeracer Mongolian. Бүх эрх хуулиар хамгаалагдсан.
+            &copy; {new Date().getFullYear()} TypeRacer. All rights reserved.
           </div>
         </div>
       </footer>

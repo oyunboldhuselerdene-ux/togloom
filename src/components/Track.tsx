@@ -27,9 +27,9 @@ export default function Track({ progress = 0, vehicle, isFinished = false, playe
       <div className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-md relative overflow-hidden mb-6" id="multiplayer-track-container">
         {/* Decorative Track Details */}
         <div className="flex justify-between text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-3 pointer-events-none">
-          <span className="flex items-center gap-1">🚩 ГАРАА (START)</span>
-          <span className="text-indigo-400">ДУЭЛЬ УРАЛДААН!</span>
-          <span className="flex items-center gap-1 text-emerald-400 font-extrabold">БАРИА (FINISH) 🏁</span>
+          <span className="flex items-center gap-1">🚩 START</span>
+          <span className="text-indigo-400">DUEL RACE!</span>
+          <span className="flex items-center gap-1 text-emerald-400 font-extrabold">FINISH 🏁</span>
         </div>
 
         {/* Lanes stacked vertically */}
@@ -93,7 +93,7 @@ export default function Track({ progress = 0, vehicle, isFinished = false, playe
                         ? "bg-indigo-600 text-white border-indigo-400" 
                         : "bg-slate-700 text-slate-300 border-slate-600"
                     }`}>
-                      {p.isMe ? "ТА" : p.name} ({Math.round(playerPercent)}%)
+                      {p.isMe ? "YOU" : p.name} ({Math.round(playerPercent)}%)
                     </span>
                   </div>
                 </motion.div>
@@ -135,9 +135,9 @@ export default function Track({ progress = 0, vehicle, isFinished = false, playe
 
       {/* Decorative Track Details */}
       <div className="flex justify-between text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5 pointer-events-none">
-        <span className="flex items-center gap-1">🚩 ГАРАА (START)</span>
-        <span className="hidden sm:inline">ШУУД УРАГШАА!</span>
-        <span className="flex items-center gap-1 text-emerald-400 font-extrabold">БАРИА (FINISH) 🏁</span>
+        <span className="flex items-center gap-1">🚩 START</span>
+        <span className="hidden sm:inline">STRAIGHT AHEAD!</span>
+        <span className="flex items-center gap-1 text-emerald-400 font-extrabold">FINISH 🏁</span>
       </div>
 
       {/* Actual Racetrack Canvas */}
@@ -229,7 +229,7 @@ export default function Track({ progress = 0, vehicle, isFinished = false, playe
 
             {/* Mini Player Marker */}
             <span className="absolute -bottom-5 bg-slate-900 text-white font-bold font-mono text-[9px] px-1.5 py-0.5 rounded border border-slate-700 whitespace-nowrap shadow uppercase">
-              ТА ({Math.round(percentage)}%)
+              YOU ({Math.round(percentage)}%)
             </span>
           </div>
         </motion.div>

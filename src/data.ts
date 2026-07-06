@@ -4,98 +4,98 @@ export const GAME_TEXTS: GameText[] = [
   // Easy
   {
     id: "e1",
-    text: "Ажил хийвэл ам тосодно гэж монгол ардын зүйр цэцэн үг байдаг.",
+    text: "Actions speak louder than words, as the old saying goes.",
     difficulty: "easy",
-    source: "Монгол ардын зүйр үг"
+    source: "Proverb"
   },
   {
     id: "e2",
-    text: "Эрдэм ном бол ертөнцийг харах цонх бөгөөд хүний амьдралын хамгийн том баялаг мөн.",
+    text: "Education is the window to the world and the greatest wealth in life.",
     difficulty: "easy",
-    source: "Сургаал үг"
+    source: "Inspirational Quote"
   },
   {
     id: "e3",
-    text: "Сайн санааны үзүүрт шар тос гэдэг шиг үргэлж бусдад тусалж явах нь сайхан.",
+    text: "Helping others brings joy and makes the world a better place.",
     difficulty: "easy",
-    source: "Ард түмний сургаал"
+    source: "Wisdom"
   },
   {
     id: "e4",
-    text: "Эрүүл биед саруул ухаан оршино гэдэг тул өдөр бүр дасгал хөдөлгөөн хийж байх хэрэгтэй.",
+    text: "A healthy mind resides in a healthy body, so daily exercise is vital.",
     difficulty: "easy",
-    source: "Нийтийн эрүүл мэнд"
+    source: "Health Advice"
   },
   // Medium
   {
     id: "m1",
-    text: "Монгол улс бол уудам уушиг шиг дэлхийн цээжинд орших цэлгэр тал, уул нуруу хосолсон сайхан эх орон билээ.",
+    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
     difficulty: "medium",
-    source: "Эх орны магтуу"
+    source: "Winston Churchill"
   },
   {
     id: "m2",
-    text: "Хүн бүхэн өөрийнхөө ирээдүйн эзэн нь бөгөөд зөвхөн хичээл зүтгэл, тууштай байдлаар амжилтанд хүрдэг.",
+    text: "Everyone is the master of their own destiny, which is achieved through diligence and persistence.",
     difficulty: "medium",
-    source: "Хувь хүний хөгжил"
+    source: "Personal Development"
   },
   {
     id: "m3",
-    text: "Аялгуут сайхан монгол хэлээрээ зөв бичиж, цэвэр сайхан ярих нь эх орноо хайрлаж буй хамгийн том илрэл юм.",
+    text: "Writing and speaking English correctly and beautifully is a great way to communicate with the world.",
     difficulty: "medium",
-    source: "Эх хэлний тухай"
+    source: "Language Study"
   },
   {
     id: "m4",
-    text: "Зорилгодоо хүрэх хамгийн дөт зам бол өнөөдрийн ажлаа маргааш гэж хойшлуулахгүйгээр шууд хийж эхлэх явдал юм.",
+    text: "The shortest path to your goal is to start doing your work today without postponing it until tomorrow.",
     difficulty: "medium",
-    source: "Сургамж үг"
+    source: "Advice"
   },
   // Hard
   {
     id: "h1",
-    text: "Монголын нууц товчоон бол манай түүх, уран зохиолын хамгийн хосгүй үнэт дурсгал бөгөөд үеийн үед уншиж судлах учиртай түүхэн сурвалж бичиг мөн.",
+    text: "The quick brown fox jumps over the lazy dog is an English pangram, containing every letter of the alphabet, which makes it perfect for typing practice.",
     difficulty: "hard",
-    source: "Түүхийн сурвалж"
+    source: "Typing Practice"
   },
   {
     id: "h2",
-    text: "Технологийн хөгжил асар хурдтай явагдаж буй өнөө үед монгол залуус дэлхийн тавцанд өрсөлдөх чадвараа батлан харуулсаар байгаа нь бахархалтай.",
+    text: "With technology developing at an incredibly rapid pace, young professionals are constantly proving their competitiveness on the global stage.",
     difficulty: "hard",
-    source: "Мэдээ мэдээлэл"
+    source: "Technology News"
   },
   {
     id: "h3",
-    text: "Амьдрал бол урсан өнгөрөх урт гол шиг бөгөөд түүний замд тааралдах бэрхшээл бүрийг инээмсэглэлээр угтаж, сургамж болгон үлдэх нь чухал юм шүү.",
+    text: "Life is like a long flowing river, and it is important to greet every obstacle with a smile and turn it into a valuable lesson.",
     difficulty: "hard",
-    source: "Амьдралын ухаан"
+    source: "Life Philosophy"
   },
   {
     id: "h4",
-    text: "Байгаль эхээ хайрлан хамгаалах нь зөвхөн төр засгийн ажил биш, харин иргэн бүрийн ухамсарт үйл ажиллагаанаас шууд хамаарах ариун үүрэг мөн бөгөөд үүнийг хүүхэд ахуй наснаас нь суулгах хэрэгтэй.",
+    text: "Protecting mother nature is not just the responsibility of governments, but a sacred duty that depends directly on the conscious actions of every citizen.",
     difficulty: "hard",
-    source: "Экологийн боловсрол"
+    source: "Environmental Education"
   }
 ];
 
 export const RACER_VEHICLES: RacerVehicle[] = [
   {
     id: "car",
-    label: "Уралдааны машин",
+    label: "Racing Car",
     emoji: "🚗",
     color: "text-rose-500",
     bgColor: "bg-rose-50 border-rose-200 text-rose-700 dark:bg-rose-950/20 dark:border-rose-900/50"
   },
   {
     id: "rocket",
-    label: "Сансрын пуужин",
+    label: "Space Rocket",
     emoji: "🚀",
     color: "text-indigo-500",
     bgColor: "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/20 dark:border-indigo-900/50"
   },
   {
     id: "horse",
-    label: "Хурдан морь",
+    label: "Fast Horse",
     emoji: "🐎",
     color: "text-amber-600",
     bgColor: "bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-950/20 dark:border-amber-900/50"
